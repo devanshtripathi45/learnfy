@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ukf9@l8%s+=m6!ky2_lb@jf90zz^ug_mp-p_h(=#jg_otpqnx$'
+# Prefer providing SECRET_KEY via environment for production.
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-ukf9@l8%s+=m6!ky2_lb@jf90zz^ug_mp-p_h(=#jg_otpqnx$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Toggle DEBUG via the DJANGO_DEBUG env var (True/False). Default to True for local dev.
@@ -32,6 +33,24 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') in ['True', 'true', '1']
 default_hosts = 'learnify-to2l.onrender.com,127.0.0.1,localhost'
 allowed = os.environ.get('DJANGO_ALLOWED_HOSTS', default_hosts)
 ALLOWED_HOSTS = [h.strip() for h in allowed.split(',') if h.strip()]
+
+# Security settings: sensible defaults controlled by environment variables.
+# Do NOT enable DEBUG in production; set DJANGO_DEBUG=False on the host.
+
+# Use secure cookies when not in DEBUG mode by default.
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
+# Redirect HTTP to HTTPS when in production; allow override via env var.
+SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', 'True' if not DEBUG else 'False') in ['True', 'true', '1']
+
+# HSTS: default to 0 (disabled). Set DJANGO_SECURE_HSTS_SECONDS in production (e.g. 31536000).
+SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '0'))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', 'True') in ['True', 'true', '1']
+SECURE_HSTS_PRELOAD = os.environ.get('DJANGO_SECURE_HSTS_PRELOAD', 'False') in ['True', 'true', '1']
+
+# When behind a proxy (like Render), ensure SECURE_PROXY_SSL_HEADER is set if needed.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') if os.environ.get('DJANGO_USE_X_FORWARDED_PROTO', 'True') in ['True', 'true', '1'] else None
 
 
 # Application definition
@@ -126,6 +145,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+# Directory where `collectstatic` will gather static files for production.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
