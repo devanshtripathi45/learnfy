@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ukf9@l8%s+=m6!ky2_lb@jf90zz^ug_mp-p_h(=#jg_otpqnx$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Toggle DEBUG via the DJANGO_DEBUG env var (True/False). Default to True for local dev.
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') in ['True', 'true', '1']
 
-ALLOWED_HOSTS = ['learnify-to2l.onrender.com', '127.0.0.1', 'localhost']
+# Configure ALLOWED_HOSTS from environment variable for flexible deployments.
+# Example: DJANGO_ALLOWED_HOSTS=learnify-to2l.onrender.com,127.0.0.1,localhost
+default_hosts = 'learnify-to2l.onrender.com,127.0.0.1,localhost'
+allowed = os.environ.get('DJANGO_ALLOWED_HOSTS', default_hosts)
+ALLOWED_HOSTS = [h.strip() for h in allowed.split(',') if h.strip()]
 
 
 # Application definition
@@ -134,8 +140,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Email settings for development - console backend
-import os
-
 # Email configuration: use SMTP when env vars provided, otherwise console backend for development
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'webmaster@localhost')
 if os.environ.get('EMAIL_HOST'):
