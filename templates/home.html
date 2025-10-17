@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home - Learnify{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <header class="blue-hero-banner p-4 p-md-5 text-center text-md-start">
+        <div class="row align-items-center">
+            <div class="col-md-9">
+                <h1 class="display-5 fw-bold mb-3 text-white">Learn with me</h1>
+                <p class="lead d-none d-md-block text-white">
+                    Become a Skilled Network Professional with LearnWithShivam
+                </p>
+                <button type="button" class="btn-accent btn-lg mt-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-play-circle-fill me-2" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                    </svg>
+                    Watch Our Courses
+                </button>
+            </div>
+            <div class="col-md-3 text-center mt-3 mt-md-0">
+                    {% load static %}
+                    <img src="{% static 'images/1.jpeg' %}" 
+                     class="img-fluid rounded-circle profile-img" 
+                     alt="Profile Image">
+            </div>
+        </div>
+    </header>
+</div>
+
+
+
+    <div class="container my-5">
+        <h2 class="text-primary mb-4">Latest Courses</h2>
+        {% if courses %}
+            <div class="row">
+                {% for c in courses %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-bold">{{ c.title }}</h5>
+                            <p class="card-text text-muted">{{ c.short_description|truncatechars:100 }}</p>
+                            <a href="{% url 'course_detail' c.slug %}" class="btn btn-outline-primary btn-sm">View Course</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No courses yet.</p>
+        {% endif %}
+    </div>
+    <section>
+      <h2>Latest Blog Posts</h2>
+      {% if posts %}
+        <ul>
+          {% for p in posts %}
+            <li><a href="{% url 'blog_detail' p.slug %}">{{ p.title }}</a></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No posts yet.</p>
+      {% endif %}
+    </section>
+{% endblock %}
+
+

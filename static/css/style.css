@@ -1,0 +1,162 @@
+/* Learnify — Cisco APIC inspired theme */
+:root {
+    --primary-bg: #1B365D; /* dark navy blue */
+    --text-primary: #FFFFFF; /* white */
+    --text-secondary: #C9D1D9; /* light gray */
+    --accent: #0078D4; /* bright blue */
+    --accent-hover: #005A9E; /* hover */
+    --surface: #123047; /* slightly darker surface for cards */
+    --muted-shadow: rgba(0,0,0,0.45);
+    --radius: 8px;
+}
+
+/* Reset & base */
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* Layout containers */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5 {
+    color: var(--text-primary);
+    margin-top: 0;
+}
+
+h1.display-5 { font-size: 2.5rem; }
+
+p, li, a, label, input, textarea, button {
+    color: var(--text-secondary);
+}
+
+/* Navbar override (also present in navbar.html styles) */
+.navbar-custom {
+    background: linear-gradient(90deg, var(--primary-bg) 0%, #153451 100%);
+    box-shadow: 0 4px 12px var(--muted-shadow);
+}
+.navbar-custom .navbar-brand {
+    color: var(--text-primary) !important;
+}
+.navbar-custom .nav-link {
+    color: var(--text-secondary) !important;
+}
+.navbar-custom .nav-link.active,
+.navbar-custom .nav-link:hover {
+    color: var(--text-primary) !important;
+    background: transparent;
+}
+.navbar-custom .btn-outline-white {
+    color: var(--text-primary);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Hero Banner */
+.blue-hero-banner {
+    background: linear-gradient(90deg, var(--primary-bg) 0%, #153a5a 100%);
+    color: var(--text-primary);
+    padding: 3rem 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    margin-bottom: 2rem;
+}
+.profile-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.12);
+}
+
+/* Cards and panels */
+.card, .card-body {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+    border: 1px solid rgba(255,255,255,0.04);
+    color: var(--text-secondary);
+    border-radius: calc(var(--radius) - 2px);
+}
+.card .card-title { color: var(--text-primary); }
+
+/* Buttons & links */
+.btn-accent, button.btn-accent {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    transition: background-color 180ms ease, transform 120ms ease;
+}
+.btn-accent:hover, button.btn-accent:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+}
+.btn-outline-primary {
+    color: var(--accent);
+    border: 1px solid rgba(0,120,212,0.18);
+    background: transparent;
+}
+.btn-outline-primary:hover {
+    background: rgba(0,120,212,0.08);
+    color: white;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+/* Forms */
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    color: var(--text-primary);
+}
+input::placeholder, textarea::placeholder { color: rgba(201,209,217,0.5); }
+
+/* Section styling */
+section {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03));
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: var(--radius);
+}
+
+/* Lists */
+ul { list-style: none; padding: 0; }
+li { margin: 0.6rem 0; }
+
+/* Footer */
+footer {
+    background: linear-gradient(90deg, #0f2130 0%, #12283a 40%, var(--primary-bg) 100%);
+    color: var(--text-primary);
+    padding: 2rem 0;
+}
+
+/* Utility helpers */
+.text-muted { color: var(--text-secondary) !important; }
+.text-primary { color: var(--accent) !important; }
+.shadow-soft { box-shadow: 0 6px 18px rgba(3,10,27,0.55); }
+
+/* Accessibility: ensure headings in hero are prominent */
+.blue-hero-banner h1, .blue-hero-banner h2 { color: var(--text-primary); }
+
+/* Small responsive tweaks */
+@media (max-width: 767px) {
+    .container { padding: 16px; }
+    .blue-hero-banner { padding: 2rem 1rem; }
+}
+

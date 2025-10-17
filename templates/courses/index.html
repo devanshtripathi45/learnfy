@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Courses - Learnify{% endblock %}
+{% block content %}
+  <h1>Courses</h1>
+  <ul>
+    {% for item in items %}
+      <li>
+        <a href="{% url 'course_detail' item.slug %}">{{ item.title }}</a>
+        {% if item.image %}<br><img src="{{ item.image.url }}" alt="{{ item.title }}" width="150">{% endif %}
+        <p>{{ item.description }}</p>
+      </li>
+    {% empty %}
+      <li>No courses yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+
