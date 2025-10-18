@@ -1,1 +1,1 @@
-web: gunicorn learnify.wsgi --log-file -
+web: gunicorn learnfy.wsgi --log-file -
