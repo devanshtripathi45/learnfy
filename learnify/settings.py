@@ -21,36 +21,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Prefer providing SECRET_KEY via environment for production.
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-ukf9@l8%s+=m6!ky2_lb@jf90zz^ug_mp-p_h(=#jg_otpqnx$')
+# Set this in your environment: DJANGO_SECRET_KEY='your-very-long-random-string'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-key-for-local-development-only-123456')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Toggle DEBUG via the DJANGO_DEBUG env var (True/False). Default to True for local dev.
+# Set DJANGO_DEBUG=False in production, True for local dev
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') in ['True', 'true', '1']
 
-# Configure ALLOWED_HOSTS from environment variable for flexible deployments.
-# Example: DJANGO_ALLOWED_HOSTS=learnify-to2l.onrender.com,127.0.0.1,localhost
-default_hosts = 'learnify-to2l.onrender.com,127.0.0.1,localhost'
-allowed = os.environ.get('DJANGO_ALLOWED_HOSTS', default_hosts)
-ALLOWED_HOSTS = [h.strip() for h in allowed.split(',') if h.strip()]
+# Set DJANGO_ALLOWED_HOSTS as a comma-separated list for deployment
+# Default to localhost for local development
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
-# Security settings: sensible defaults controlled by environment variables.
-# Do NOT enable DEBUG in production; set DJANGO_DEBUG=False on the host.
-
-# Use secure cookies when not in DEBUG mode by default.
+# Security settings - enabled in production, disabled for local development
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
-
-# Redirect HTTP to HTTPS when in production; allow override via env var.
-SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', 'True' if not DEBUG else 'False') in ['True', 'true', '1']
-
-# HSTS: default to 0 (disabled). Set DJANGO_SECURE_HSTS_SECONDS in production (e.g. 31536000).
-SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '0'))
-SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', 'True') in ['True', 'true', '1']
-SECURE_HSTS_PRELOAD = os.environ.get('DJANGO_SECURE_HSTS_PRELOAD', 'False') in ['True', 'true', '1']
-
-# When behind a proxy (like Render), ensure SECURE_PROXY_SSL_HEADER is set if needed.
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') if os.environ.get('DJANGO_USE_X_FORWARDED_PROTO', 'True') in ['True', 'true', '1'] else None
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = not DEBUG
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') if not DEBUG else None
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 
 # Application definition
@@ -70,6 +62,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -101,11 +94,12 @@ WSGI_APPLICATION = 'learnify.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')
+    )
 }
 
 
@@ -143,10 +137,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 # Directory where `collectstatic` will gather static files for production.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise configuration for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -173,3 +170,43 @@ if os.environ.get('EMAIL_HOST'):
 else:
     # Fallback to console backend for development
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'django.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}

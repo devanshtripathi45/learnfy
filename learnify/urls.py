@@ -66,11 +66,18 @@ def contact_view(request):
     return render(request, 'contact.html', { 'form': form })
 
 
+def health_check(request):
+    """Simple health check endpoint for deployment platforms"""
+    from django.http import JsonResponse
+    return JsonResponse({'status': 'healthy', 'message': 'Learnify is running!'})
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
     path('about/', about_view, name='about'),
     path('contact/', contact_view, name='contact'),
+    path('health/', health_check, name='health'),
     path('accounts/', include('accounts.urls')),
     path('courses/', include('courses.urls')),
     path('blog/', include('blog.urls')),
