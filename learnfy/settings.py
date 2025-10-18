@@ -94,7 +94,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'learnify.urls'
+ROOT_URLCONF = 'learnfy.urls'
 
 TEMPLATES = [
     {
@@ -111,7 +111,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'learnify.wsgi.application'
+WSGI_APPLICATION = 'learnfy.wsgi.application'
 
 
 # Database
