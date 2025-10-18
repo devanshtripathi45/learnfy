@@ -30,6 +30,12 @@ def home_view(request):
     return render(request, 'home.html', { 'posts': posts, 'courses': courses })
 
 
+def simple_health_check(request):
+    """Simple health check for Railway root path"""
+    from django.http import JsonResponse
+    return JsonResponse({'status': 'ok', 'message': 'Server is running'})
+
+
 def about_view(request):
     from accounts.models import About
     about = About.objects.first()
@@ -69,7 +75,29 @@ def contact_view(request):
 def health_check(request):
     """Simple health check endpoint for deployment platforms"""
     from django.http import JsonResponse
-    return JsonResponse({'status': 'healthy', 'message': 'Learnify is running!'})
+    from django.db import connection
+    from django.core.cache import cache
+    
+    try:
+        # Test database connection
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        
+        # Test cache (if available)
+        cache.set('health_check', 'ok', 10)
+        cache.get('health_check')
+        
+        return JsonResponse({
+            'status': 'healthy', 
+            'message': 'Learnify is running!',
+            'database': 'connected',
+            'cache': 'working'
+        })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'unhealthy',
+            'message': f'Error: {str(e)}'
+        }, status=500)
 
 
 urlpatterns = [
