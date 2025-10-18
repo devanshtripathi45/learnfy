@@ -31,10 +31,15 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') in ['True', 'true', '1']
 # Set DJANGO_ALLOWED_HOSTS as a comma-separated list for deployment
 # Default to localhost for local development
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+CSRF_TRUSTED_ORIGINS = [
+    'https://learnfy-1.onrender.com',
+]
+
+
 
 # Local development settings - FORCE HTTP ONLY
 if DEBUG:
-    ALLOWED_HOSTS = ['*']  # Allow all hosts for local development
+    ALLOWED_HOSTS = ['learnfy-1.onrender.com', 'localhost', '127.0.0.1']  # Allow all hosts for local development
     # Explicitly disable ALL HTTPS-related settings for local development
     SECURE_SSL_REDIRECT = False
     CSRF_COOKIE_SECURE = False

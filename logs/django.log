@@ -419,3 +419,26 @@ INFO 2025-10-18 15:57:47,291 autoreload 9560 14548 Watching for file changes wit
 INFO 2025-10-18 16:03:49,820 basehttp 9560 12548 "GET / HTTP/1.1" 200 7545
 INFO 2025-10-18 16:03:49,846 basehttp 9560 12548 "GET /static/css/style.css HTTP/1.1" 304 0
 INFO 2025-10-18 16:04:30,975 basehttp 9560 12548 "GET / HTTP/1.1" 200 7434
+INFO 2025-10-18 17:03:01,279 basehttp 9560 10716 "GET / HTTP/1.1" 200 7434
+INFO 2025-10-18 17:03:01,333 basehttp 9560 10716 "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:06,498 basehttp 9560 10716 "GET /admin/ HTTP/1.1" 200 13150
+INFO 2025-10-18 17:03:06,511 basehttp 9560 14720 "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:06,512 basehttp 9560 10716 "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:06,518 basehttp 9560 17028 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:07,158 basehttp 9560 17028 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:07,168 basehttp 9560 17028 "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:07,174 basehttp 9560 10716 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:07,184 basehttp 9560 17028 "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:07,207 basehttp 9560 17028 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:07,254 basehttp 9560 17028 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:07,260 basehttp 9560 17028 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+INFO 2025-10-18 17:03:16,780 basehttp 9560 17028 "GET /admin/password_change/ HTTP/1.1" 200 10523
+INFO 2025-10-18 17:03:16,948 basehttp 9560 17028 "GET /static/admin/css/forms.css HTTP/1.1" 200 8525
+INFO 2025-10-18 17:03:16,962 basehttp 9560 17028 "GET /static/admin/css/widgets.css HTTP/1.1" 200 11973
+INFO 2025-10-18 17:03:36,854 basehttp 9560 17028 "GET /admin/ HTTP/1.1" 200 13150
+INFO 2025-10-18 17:09:55,197 autoreload 9560 14548 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\settings.py changed, reloading.
+INFO 2025-10-18 17:09:56,252 autoreload 13960 4520 Watching for file changes with StatReloader
+INFO 2025-10-18 17:09:59,899 autoreload 13960 4520 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\settings.py changed, reloading.
+INFO 2025-10-18 17:10:00,682 autoreload 20732 13508 Watching for file changes with StatReloader
+INFO 2025-10-18 17:11:55,071 autoreload 20732 13508 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\settings.py changed, reloading.
+INFO 2025-10-18 17:11:55,974 autoreload 15692 7120 Watching for file changes with StatReloader
