@@ -1,61 +1,39 @@
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1d3557;">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center" href="/">
       {% load static %}
-      <a class="navbar-brand fw-bold fs-4 d-flex align-items-center" href="/">
-        <img src="{% static 'images/2.png' %}" alt="Logo" style="height:40px; width:auto;">
-      </a>
+      <img src="{% static 'images/2.png' %}" alt="Logo" width="40" height="40" class="me-2">
+      <span class="fw-semibold text-white">Learnify</span>
+    </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavBlue" aria-controls="navbarNavBlue" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- Mobile toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse" id="navbarNavBlue">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a></li>
-              <li class="nav-item"><a class="nav-link {% if 'courses' in request.path %}active{% endif %}" href="/courses/">Courses</a></li>
-              <li class="nav-item"><a class="nav-link {% if 'blog' in request.path %}active{% endif %}" href="/blog/">Blog</a></li>
-              <li class="nav-item"><a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="/about/">About</a></li>
-              <li class="nav-item"><a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="/contact/">Contact</a></li>
-          </ul>
+    <!-- Navbar Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link {% if 'courses' in request.path %}active{% endif %}" href="/courses/">Courses</a></li>
+        <li class="nav-item"><a class="nav-link {% if 'blog' in request.path %}active{% endif %}" href="/blog/">Blog</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="/about/">About</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="/contact/">Contact</a></li>
+      </ul>
 
-          <form class="d-flex ms-lg-3 my-2 my-lg-0">
-              <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
-              <button class="btn btn-outline-light" type="submit">Search</button>
-          </form>
-
-      <div class="d-none d-lg-flex align-items-center ms-lg-3">
-        {% load static %}
-  <a href="{% url 'login' %}" class="btn-accent me-2">Sign In</a>
-  <a href="{% url 'signup' %}" class="btn-accent me-2">Sign Up</a>
-  <a href="https://www.linkedin.com/in/shivam-tripathi-968962b5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="btn btn-outline-white" rel="noopener">LinkedIn</a>
+      <!-- Search + Icons -->
+      <div class="d-flex align-items-center">
+        <form class="d-flex me-3" role="search" action="/search/" method="GET">
+          <input class="form-control form-control-sm me-2" type="search" placeholder="Search..." name="q" aria-label="Search">
+          <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
+        </form>
+        <a href="http://www.linkedin.com/in/shivam-tripathi-968962b5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="text-white me-3 fs-5">
+          <i class="bi bi-linkedin"></i>
+        </a>
+        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Sign In</a>
       </div>
-      </div>
+    </div>
   </div>
 </nav>
-
-<style>
-.navbar-custom {
-  background: linear-gradient(90deg, var(--primary-bg) 0%, #153451 100%);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.45);
-}
-.navbar-custom .navbar-brand,
-.navbar-custom .nav-link {
-  color: var(--text-primary) !important;
-}
-.navbar-custom .nav-link:hover { color: var(--accent) !important; }
-.navbar-custom .form-control {
-  border: 1px solid rgba(255,255,255,0.06);
-  background-color: rgba(255,255,255,0.02);
-  color: var(--text-primary);
-}
-.navbar-custom .form-control::placeholder { color: rgba(201,209,217,0.5); }
-.navbar-custom .btn-outline-light {
-  border-color: rgba(255,255,255,0.12);
-  color: var(--text-primary);
-}
-.navbar-custom .btn-outline-light:hover { background-color: rgba(255,255,255,0.06); }
-.navbar-custom .btn-outline-white { color: var(--text-primary); border-color: rgba(255,255,255,0.12);} 
-.navbar-custom .btn-outline-white:hover { background-color: rgba(255,255,255,0.06); color: var(--accent-hover) !important; }
-.navbar-custom .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.55%29' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
-.navbar-custom .navbar-toggler { border-color: rgba(255,255,255,0.08); }
-</style>

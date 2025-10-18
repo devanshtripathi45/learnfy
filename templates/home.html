@@ -2,65 +2,127 @@
 {% load static %}
 {% block title %}Home - Learnify{% endblock %}
 {% block content %}
-<div class="container my-5">
-    <header class="blue-hero-banner p-4 p-md-5 text-center text-md-start">
-        <div class="row align-items-center">
-            <div class="col-md-9">
-                <h1 class="display-5 fw-bold mb-3 text-white">Learn with me</h1>
-                <p class="lead d-none d-md-block text-white">
-                    Become a Skilled Network Professional with LearnWithShivam
-                </p>
-                <button type="button" class="btn-accent btn-lg mt-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-play-circle-fill me-2" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
-                    </svg>
-                    Watch Our Courses
-                </button>
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose Learnify?</h2>
+            <p class="section-subtitle">Comprehensive learning experience designed for network professionals</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Expert-Led Training</h3>
+                <p>Learn from industry professionals with years of real-world experience in network engineering.</p>
             </div>
-            <div class="col-md-3 text-center mt-3 mt-md-0">
-                    {% load static %}
-                    <img src="{% static 'images/1.jpeg' %}" 
-                     class="img-fluid rounded-circle profile-img" 
-                     alt="Profile Image">
+            <div class="feature-card">
+                <div class="feature-icon">🛠️</div>
+                <h3>Hands-On Labs</h3>
+                <p>Practice with real equipment and scenarios to build practical skills that employers value.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Comprehensive Curriculum</h3>
+                <p>From basics to advanced topics, covering all aspects of modern network infrastructure.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Career Support</h3>
+                <p>Get guidance on certifications, job search strategies, and career advancement opportunities.</p>
             </div>
         </div>
-    </header>
-</div>
+    </div>
+</section>
 
-
-
-    <div class="container my-5">
-        <h2 class="text-primary mb-4">Latest Courses</h2>
+<!-- Latest Courses Section -->
+<section class="courses-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Latest Courses</h2>
+            <p class="section-subtitle">Start your learning journey with our most popular courses</p>
+        </div>
         {% if courses %}
-            <div class="row">
+            <div class="courses-grid">
                 {% for c in courses %}
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm border-0" style="border-radius: 15px;">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary fw-bold">{{ c.title }}</h5>
-                            <p class="card-text text-muted">{{ c.short_description|truncatechars:100 }}</p>
-                            <a href="{% url 'course_detail' c.slug %}" class="btn btn-outline-primary btn-sm">View Course</a>
+                <div class="course-card">
+                    <div class="course-image">
+                        {% if c.image %}
+                            <img src="{{ c.image.url }}" alt="{{ c.title }}">
+                        {% else %}
+                            <div class="course-placeholder">
+                                <span class="placeholder-icon">📖</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="course-content">
+                        <h3>{{ c.title }}</h3>
+                        <p class="course-description">{{ c.short_description|truncatechars:120 }}</p>
+                        <div class="course-meta">
+                            <span class="course-level">Beginner</span>
+                            <span class="course-duration">4 weeks</span>
+                        </div>
+                        <a href="{% url 'course_detail' c.slug %}" class="btn btn-primary">View Course</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">
+                <p class="text-muted">New courses coming soon! Stay tuned for exciting content.</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Latest Blog Posts Section -->
+<section class="blog-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Latest Insights</h2>
+            <p class="section-subtitle">Stay updated with industry trends and expert tips</p>
+        </div>
+        {% if posts %}
+            <div class="blog-grid">
+                {% for p in posts %}
+                <div class="blog-card">
+                    <div class="blog-image">
+                        {% if p.image %}
+                            <img src="{{ p.image.url }}" alt="{{ p.title }}">
+                        {% else %}
+                            <div class="blog-placeholder">
+                                <span class="placeholder-icon">📝</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="blog-content">
+                        <h3><a href="{% url 'blog_detail' p.slug %}">{{ p.title }}</a></h3>
+                        <p class="blog-excerpt">{{ p.description|truncatechars:100 }}</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">{{ p.published_at|date:"M d, Y" }}</span>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-muted">No courses yet.</p>
+            <div class="text-center">
+                <p class="text-muted">Blog posts coming soon! Check back for valuable insights.</p>
+            </div>
         {% endif %}
     </div>
-    <section>
-      <h2>Latest Blog Posts</h2>
-      {% if posts %}
-        <ul>
-          {% for p in posts %}
-            <li><a href="{% url 'blog_detail' p.slug %}">{{ p.title }}</a></li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No posts yet.</p>
-      {% endif %}
-    </section>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Start Your Network Engineering Journey?</h2>
+            <p>Join our community of learners and take the first step towards mastering network technologies.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">Get Started Today</a>
+                <a href="/contact/" class="btn btn-outline-primary btn-lg">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
-
-

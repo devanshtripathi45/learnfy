@@ -2,17 +2,21 @@
 {% load static %}
 {% block title %}About - Learnify{% endblock %}
 {% block content %}
-<div class="row">
-  <div class="col-md-4 text-center">
-    {% if about and about.photo %}
-      <img src="{{ about.photo.url }}" class="img-fluid rounded-circle profile-img" alt="{{ about.name }}">
-    {% else %}
-      <img src="{% static 'images/1.jpeg' %}" class="img-fluid rounded-circle profile-img" alt="Profile">
-    {% endif %}
-  </div>
-  <div class="col-md-8">
-    <h2 class="fw-bold">About Me</h2>
-    <p class="text-muted">{{ about.about_text|linebreaks }}</p>
-  </div>
+<div class="content-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-image">
+                {% if about and about.photo %}
+                    <img src="{{ about.photo.url }}" alt="{{ about.name }}" class="profile-image">
+                {% else %}
+                    <img src="{% static 'images/1.jpeg' %}" alt="Profile" class="profile-image">
+                {% endif %}
+            </div>
+            <div class="about-text">
+                <h1>About Me</h1>
+                <p>{{ about.about_text|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

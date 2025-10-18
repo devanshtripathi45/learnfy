@@ -2,31 +2,40 @@
 {% load static %}
 {% block title %}Login - Learnify{% endblock %}
 {% block content %}
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-      <div class="card shadow-sm border-0 rounded-3" style="background: var(--surface); color: var(--text-primary);">
-        <div class="card-body p-4">
-          <h2 class="h3 mb-3 text-primary">Login</h2>
-          <form method="post" autocomplete="off">
-            {% csrf_token %}
-            {% if form.errors %}
-              <div class="alert alert-danger">Invalid username or password.</div>
-            {% endif %}
-            <div class="mb-3">
-              {{ form.username.label_tag }}
-              {{ form.username }}
-            </div>
-            <div class="mb-3">
-              {{ form.password.label_tag }}
-              {{ form.password }}
-            </div>
-            <button type="submit" class="btn-accent w-100">Login</button>
-          </form>
-          <p class="mt-3 text-secondary">No account? <a href="{% url 'signup' %}" class="text-primary">Sign up</a></p>
+<div class="content-section">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h1>Welcome Back</h1>
+            <p class="text-muted">Sign in to your account to continue learning</p>
         </div>
-      </div>
+        
+        <div class="form" style="max-width: 400px; margin: 0 auto;">
+            <h2 class="text-center mb-6">Login</h2>
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger">Invalid username or password.</div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    {{ form.password }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            
+            <div class="text-center mt-6">
+                <p class="text-muted">Don't have an account? <a href="{% url 'signup' %}" class="text-primary">Sign up</a></p>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 

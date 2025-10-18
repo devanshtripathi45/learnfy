@@ -1,18 +1,27 @@
 {% extends 'base.html' %}
 {% block title %}Courses - Learnify{% endblock %}
 {% block content %}
-  <h1>Courses</h1>
-  <ul>
-    {% for item in items %}
-      <li>
-        <a href="{% url 'course_detail' item.slug %}">{{ item.title }}</a>
-        {% if item.image %}<br><img src="{{ item.image.url }}" alt="{{ item.title }}" width="150">{% endif %}
-        <p>{{ item.description }}</p>
-      </li>
-    {% empty %}
-      <li>No courses yet.</li>
-    {% endfor %}
-  </ul>
+<div class="content-section">
+    <h1>Available Courses</h1>
+    {% if items %}
+        <div class="courses-grid">
+            {% for item in items %}
+            <div class="course-card">
+                <h3>{{ item.title }}</h3>
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}" class="mb-4" style="width: 100%; height: 200px; object-fit: cover; border-radius: var(--radius-md);">
+                {% endif %}
+                <p class="text-muted">{{ item.description }}</p>
+                <a href="{% url 'course_detail' item.slug %}" class="btn btn-primary">View Course</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center">
+            <p class="text-muted">No courses available yet.</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
 
 
