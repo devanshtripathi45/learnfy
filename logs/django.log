@@ -442,3 +442,12 @@ INFO 2025-10-18 17:09:59,899 autoreload 13960 4520 C:\Users\devan\OneDrive\Deskt
 INFO 2025-10-18 17:10:00,682 autoreload 20732 13508 Watching for file changes with StatReloader
 INFO 2025-10-18 17:11:55,071 autoreload 20732 13508 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\settings.py changed, reloading.
 INFO 2025-10-18 17:11:55,974 autoreload 15692 7120 Watching for file changes with StatReloader
+INFO 2025-10-20 15:26:11,386 autoreload 1515 140558294809792 Watching for file changes with StatReloader
+INFO 2025-10-20 15:26:15,202 basehttp 1515 140558192342720 "GET / HTTP/1.1" 200 6049
+INFO 2025-10-20 15:26:15,346 basehttp 1515 140558192342720 "GET /static/css/style.css HTTP/1.1" 200 22095
+INFO 2025-10-20 15:27:15,036 basehttp 1515 140558183950016 "GET / HTTP/1.1" 200 6049
+INFO 2025-10-20 15:27:22,254 basehttp 1515 140558183950016 "GET /static/css/style.css HTTP/1.1" 200 22095
+WARNING 2025-10-20 15:27:22,631 log 1515 140558183950016 Not Found: /favicon.ico
+WARNING 2025-10-20 15:27:22,633 basehttp 1515 140558183950016 "GET /favicon.ico HTTP/1.1" 404 3645
+INFO 2025-10-20 15:27:27,350 basehttp 1515 140558192342720 "GET /search/?q=my+frist+blog HTTP/1.1" 200 3780
+INFO 2025-10-20 15:27:27,679 basehttp 1515 140558192342720 "GET /static/css/style.css HTTP/1.1" 304 0

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - Learnify{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="mb-4">Search Results</h1>
+            
+            {% if query %}
+                <p class="text-muted">Showing results for: <strong>"{{ query }}"</strong></p>
+                
+                {% if results %}
+                    <div class="row">
+                        {% for item in results %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                {% if item.image %}
+                                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+                                {% endif %}
+                                <div class="card-body">
+                                    {% if item.type == 'course' %}
+                                        <span class="badge bg-primary mb-2">Course</span>
+                                    {% elif item.type == 'blog' %}
+                                        <span class="badge bg-success mb-2">Blog</span>
+                                    {% endif %}
+                                    <h5 class="card-title">{{ item.title }}</h5>
+                                    <p class="card-text">{{ item.short_description|default:item.description|truncatewords:20 }}</p>
+                                    {% if item.type == 'course' %}
+                                        <a href="{% url 'course_detail' item.slug %}" class="btn btn-primary">View Course</a>
+                                    {% elif item.type == 'blog' %}
+                                        <a href="{% url 'blog_detail' item.slug %}" class="btn btn-success">Read More</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-info-circle"></i> No results found for "{{ query }}". Try different keywords.
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i> Please enter a search term.
+                </div>
+            {% endif %}
+            
+            <a href="{% url 'home' %}" class="btn btn-secondary mt-3">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

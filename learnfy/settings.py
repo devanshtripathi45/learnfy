@@ -39,7 +39,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Local development settings - FORCE HTTP ONLY
 if DEBUG:
-    ALLOWED_HOSTS = ['learnfy-1.onrender.com', 'localhost', '127.0.0.1']  # Allow all hosts for local development
+    ALLOWED_HOSTS = ['*']
     # Explicitly disable ALL HTTPS-related settings for local development
     SECURE_SSL_REDIRECT = False
     CSRF_COOKIE_SECURE = False
