@@ -22,6 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 from django.core.exceptions import ImproperlyConfigured
 
+# SECURITY WARNING: don't run with debug turned on in production!
+# Set DJANGO_DEBUG=False in production, True for local dev
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') in ['True', 'true', '1']
+
 # SECURITY WARNING: keep the secret key used in production secret!
 # In production you MUST set DJANGO_SECRET_KEY environment variable.
 # For local development we provide a long, non-critical default key.
@@ -34,10 +38,6 @@ else:
         SECRET_KEY = 'django-insecure-dev-key-for-local-development-only-7f9b0a2d3e4f6c8b9a0d1e2f3a4b5c6d7e8f9a0b'
     else:
         raise ImproperlyConfigured('DJANGO_SECRET_KEY environment variable must be set in production.')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-# Set DJANGO_DEBUG=False in production, True for local dev
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') in ['True', 'true', '1']
 
 # Set DJANGO_ALLOWED_HOSTS as a comma-separated list for deployment
 # Support Render: prefer DJANGO_ALLOWED_HOSTS, then RENDER_EXTERNAL_URL (provided by Render), otherwise default to localhost
