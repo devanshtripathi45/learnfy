@@ -39,7 +39,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Local development settings - FORCE HTTP ONLY
 if DEBUG:
-    ALLOWED_HOSTS = ['learnfy-1.onrender.com', 'localhost', '127.0.0.1']  # Allow all hosts for local development
+    ALLOWED_HOSTS = ['*']
     # Explicitly disable ALL HTTPS-related settings for local development
     SECURE_SSL_REDIRECT = False
     CSRF_COOKIE_SECURE = False
@@ -105,8 +105,10 @@ TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
 		'DIRS': [BASE_DIR / 'templates'],
+		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
+				'django.template.context_processors.debug',
 				'django.template.context_processors.request',  # required by admin
 				'django.contrib.auth.context_processors.auth',
 				'django.contrib.messages.context_processors.messages',

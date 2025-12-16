@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import render
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -102,11 +103,34 @@ def health_check(request):
         }, status=500)
 
 
+def search_view(request):
+    """Search functionality for courses and blog posts"""
+    from blog.models import Item
+    from django.db.models import Q
+    
+    query = request.GET.get('q', '').strip()
+    results = []
+    
+    if query:
+        # Search in both courses and blog posts
+        results = Item.objects.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(content__icontains=query)
+        ).distinct()
+    
+    return render(request, 'search_results.html', {
+        'query': query,
+        'results': results
+    })
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
     path('about/', about_view, name='about'),
     path('contact/', contact_view, name='contact'),
+    path('search/', search_view, name='search'),
     path('health/', health_check, name='health'),
     path('accounts/', include('accounts.urls')),
     path('courses/', include('courses.urls')),
