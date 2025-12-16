@@ -20,9 +20,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
+from django.core.exceptions import ImproperlyConfigured
+
 # SECURITY WARNING: keep the secret key used in production secret!
-# Set this in your environment: DJANGO_SECRET_KEY='your-very-long-random-string'
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-key-for-local-development-only-123456')
+# In production you MUST set DJANGO_SECRET_KEY environment variable.
+# For local development we provide a long, non-critical default key.
+_secret_key_from_env = os.environ.get('DJANGO_SECRET_KEY')
+if _secret_key_from_env:
+    SECRET_KEY = _secret_key_from_env
+else:
+    if DEBUG:
+        # Local development default: long and varied to satisfy system checks
+        SECRET_KEY = 'django-insecure-dev-key-for-local-development-only-7f9b0a2d3e4f6c8b9a0d1e2f3a4b5c6d7e8f9a0b'
+    else:
+        raise ImproperlyConfigured('DJANGO_SECRET_KEY environment variable must be set in production.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set DJANGO_DEBUG=False in production, True for local dev
@@ -200,11 +211,30 @@ LOGOUT_REDIRECT_URL = '/'
 if os.environ.get('RENDER'):
     # Render terminates TLS at the load balancer; honor X-Forwarded-Proto
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = not DEBUG
-    SESSION_COOKIE_SECURE = not DEBUG
-    CSRF_COOKIE_SECURE = not DEBUG
+    # Prefer explicit secure flags in production
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', str(not DEBUG)) in ['True', 'true', '1']
+    SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', str(not DEBUG)) in ['True', 'true', '1']
+    CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', str(not DEBUG)) in ['True', 'true', '1']
     # It's recommended to set DJANGO_ALLOWED_HOSTS in Render env vars to your service host
 
+# Production hardening checks
+if not DEBUG:
+    # Ensure a secure SECRET_KEY is present in production
+    if 'DJANGO_SECRET_KEY' not in os.environ or os.environ.get('DJANGO_SECRET_KEY','').startswith('django-insecure'):
+        raise ImproperlyConfigured('In production you must set a secure DJANGO_SECRET_KEY environment variable.')
+
+    # Enforce secure cookies and redirects unless explicitly set otherwise
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True') in ['True', 'true', '1']
+    SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'True') in ['True', 'true', '1']
+    CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'True') in ['True', 'true', '1']
+
+    # HSTS - default to one year; can be adjusted via env var
+    SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', '31536000'))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('SECURE_HSTS_INCLUDE_SUBDOMAINS', 'True') in ['True', 'true', '1']
+    SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', 'True') in ['True', 'true', '1']
+
+    # Referrer Policy
+    SECURE_REFERRER_POLICY = os.environ.get('SECURE_REFERRER_POLICY', 'strict-origin-when-cross-origin')
 # Email settings for development - console backend
 # Email configuration: use SMTP when env vars provided, otherwise console backend for development
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'webmaster@localhost')

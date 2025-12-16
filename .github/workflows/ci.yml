@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11']
+    env:
+      DJANGO_SECRET_KEY: test-secret-key
+      DJANGO_DEBUG: 'True'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install --prefer-binary -r requirements.txt
+      - name: Run Django checks
+        run: |
+          python manage.py check
+          python verify_template.py
+      - name: Run tests
+        run: python manage.py test --verbosity=2
