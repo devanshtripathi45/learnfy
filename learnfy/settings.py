@@ -29,8 +29,14 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-key-for-lo
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') in ['True', 'true', '1']
 
 # Set DJANGO_ALLOWED_HOSTS as a comma-separated list for deployment
-# Default to localhost for local development
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# Support Render: prefer DJANGO_ALLOWED_HOSTS, then RENDER_EXTERNAL_URL (provided by Render), otherwise default to localhost
+RENDER_EXTERNAL_URL = os.environ.get('RENDER_EXTERNAL_URL')
+if os.environ.get('DJANGO_ALLOWED_HOSTS'):
+    ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(',')
+elif RENDER_EXTERNAL_URL:
+    ALLOWED_HOSTS = [RENDER_EXTERNAL_URL.replace('https://','').replace('http://','')]
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = [
     'https://learnfy-1.onrender.com',
 ]
@@ -91,6 +97,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
+	# WhiteNoise should be directly after SecurityMiddleware to serve static files efficiently
+	'whitenoise.middleware.WhiteNoiseMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,9 +135,11 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        conn_max_age=600,
+        conn_health_checks=True,
     )
-}
+}  # On Render, set DATABASE_URL env var; dj-database-url will parse it automatically
 
 
 # Password validation
@@ -185,6 +195,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication redirects
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Render-specific runtime settings
+if os.environ.get('RENDER'):
+    # Render terminates TLS at the load balancer; honor X-Forwarded-Proto
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = not DEBUG
+    SESSION_COOKIE_SECURE = not DEBUG
+    CSRF_COOKIE_SECURE = not DEBUG
+    # It's recommended to set DJANGO_ALLOWED_HOSTS in Render env vars to your service host
 
 # Email settings for development - console backend
 # Email configuration: use SMTP when env vars provided, otherwise console backend for development
