@@ -3,7 +3,7 @@ services:
     name: learnfy
     env: python
     plan: free
-    buildCommand: "pip install --upgrade pip setuptools wheel && pip install -r requirements.txt && python manage.py collectstatic --noinput"
+    buildCommand: "pip install --upgrade pip setuptools wheel && pip install --prefer-binary -r requirements.txt && python manage.py collectstatic --noinput"
     startCommand: "gunicorn learnfy.wsgi --bind 0.0.0.0:$PORT --workers 3"
     envVars:
       - key: DJANGO_SECRET_KEY
