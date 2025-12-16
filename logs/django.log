@@ -518,3 +518,5 @@ INFO 2025-12-16 14:41:34,774 basehttp 9556 2308 "GET /static/admin/js/vendor/xre
 INFO 2025-12-16 14:41:35,451 basehttp 9556 2308 "GET /static/admin/js/filters.js HTTP/1.1" 200 978
 INFO 2025-12-16 14:41:35,539 basehttp 9556 13136 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
 INFO 2025-12-16 14:41:35,540 basehttp 9556 2308 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-12-16 14:48:42,002 autoreload 9556 5068 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\urls.py changed, reloading.
+INFO 2025-12-16 14:48:42,631 autoreload 8864 15824 Watching for file changes with StatReloader
