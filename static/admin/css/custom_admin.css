@@ -1,0 +1,6 @@
+#header, .modulecaption, #site-name a {
+	background: linear-gradient(90deg,#1f3b5a,#2b6b8f);
+	color: #fff !important;
+}
+#site-name a { color: #fff !important; font-weight:600; text-decoration:none; }
+.dashboard-module { border-radius: 6px; }

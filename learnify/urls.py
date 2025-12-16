@@ -16,13 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from blog.models import Post
+from courses.models import Course
+from django.shortcuts import render
 from django.conf import settings
 from django.conf.urls.static import static
-
-# update admin branding
-admin.site.site_header = "Learnfy Admin Panel"
-admin.site.site_title = "Learnfy Admin"
-admin.site.index_title = "Manage Learnfy"
 
 def home_view(request):
     # Use unified Item model for latest content
@@ -115,4 +113,3 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

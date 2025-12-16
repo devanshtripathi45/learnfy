@@ -520,3 +520,15 @@ INFO 2025-12-16 14:41:35,539 basehttp 9556 13136 "GET /static/admin/img/sorting-
 INFO 2025-12-16 14:41:35,540 basehttp 9556 2308 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
 INFO 2025-12-16 14:48:42,002 autoreload 9556 5068 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\urls.py changed, reloading.
 INFO 2025-12-16 14:48:42,631 autoreload 8864 15824 Watching for file changes with StatReloader
+INFO 2025-12-16 14:58:22,261 autoreload 8864 15824 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\settings.py changed, reloading.
+INFO 2025-12-16 14:58:23,012 autoreload 28592 13308 Watching for file changes with StatReloader
+INFO 2025-12-16 15:03:06,142 autoreload 28592 13308 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\settings.py changed, reloading.
+INFO 2025-12-16 15:03:06,844 autoreload 26516 14072 Watching for file changes with StatReloader
+INFO 2025-12-16 15:03:08,271 autoreload 26516 14072 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\settings.py changed, reloading.
+INFO 2025-12-16 15:03:08,900 autoreload 876 15020 Watching for file changes with StatReloader
+INFO 2025-12-16 15:03:18,386 autoreload 876 15020 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\urls.py changed, reloading.
+INFO 2025-12-16 15:03:18,972 autoreload 19144 12916 Watching for file changes with StatReloader
+INFO 2025-12-16 15:03:20,442 autoreload 19144 12916 C:\Users\devan\OneDrive\Desktop\learnfy\learnfy\urls.py changed, reloading.
+INFO 2025-12-16 15:03:21,330 autoreload 11252 12760 Watching for file changes with StatReloader
+INFO 2025-12-16 15:03:45,254 autoreload 11252 12760 C:\Users\devan\OneDrive\Desktop\learnfy\core\__init__.py changed, reloading.
+INFO 2025-12-16 15:03:45,890 autoreload 6780 9708 Watching for file changes with StatReloader

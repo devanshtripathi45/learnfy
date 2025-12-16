@@ -1,19 +1,19 @@
 services:
   - type: web
-    name: learnfy
+    name: learnify
     env: python
     plan: free
     buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
-    startCommand: "gunicorn learnfy.wsgi"
+    startCommand: "gunicorn learnify.wsgi"
     envVars:
       - key: DJANGO_SECRET_KEY
         generateValue: true
       - key: DJANGO_DEBUG
         value: "False"
       - key: DJANGO_ALLOWED_HOSTS
-        value: "learnfy.onrender.com"
+        value: "learnify.onrender.com"
       - key: DATABASE_URL
         fromDatabase:
-          name: learnfy-db
+          name: learnify-db
           property: connectionString
     healthCheckPath: "/"

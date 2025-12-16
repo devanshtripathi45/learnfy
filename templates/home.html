@@ -1,12 +1,55 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Home - Learnify{% endblock %}
+{% block title %}Home{% endblock %}
 {% block content %}
-<!-- Features Section -->
+<!-- Hero Banner Section -->
+<section class="hero-banner">
+    <div class="hero-background">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Welcome to Our Platform</h1>
+                <h2 class="hero-subtitle">Master Network Engineering with Expert Guidance</h2>
+                <p class="hero-description">
+                    Transform your career with comprehensive networking courses, hands-on labs, and industry insights. 
+                    Join thousands of professionals who've accelerated their success in network engineering.
+                </p>
+                <div class="hero-cta">
+                    <a href="/courses/" class="btn btn-primary btn-lg">Explore Courses</a>
+                    <a href="/about/" class="btn btn-outline-primary btn-lg">Learn More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Students</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Courses</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-container">
+                    <img src="{% static 'images/1.jpeg' %}" alt="Network Engineering Expert" class="profile-image">
+                    <div class="image-badge">
+                        <span class="badge-text">Expert Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <section class="features-section">
     <div class="container">
         <div class="section-header">
-            <h2>Why Choose Learnify?</h2>
+            <h2>Why Choose Us?</h2>
             <p class="section-subtitle">Comprehensive learning experience designed for network professionals</p>
         </div>
         <div class="features-grid">
